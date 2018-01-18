@@ -13,15 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.dell.android_advance_ls3.R.id.image_gallery;
+
 public class MainActivity extends AppCompatActivity {
     private final static int REQUEST_IMAGE = 1;
     private RecyclerView mRecyclerView;
+    private String mDirector = "/Pictures/Zalo";
     private List<Bitmap> mBitmapList = new ArrayList<>();
 
     @Override
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         checkAndRequestPermissions();
         initView();
+
     }
 
     /**
@@ -40,8 +45,13 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == REQUEST_IMAGE)
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQUEST_IMAGE){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                initView();
+            }
+        }
+
     }
 
     public void initView(){
@@ -59,29 +69,35 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void checkAndRequestPermissions() {
-        String permission[] = {Manifest.permission.READ_EXTERNAL_STORAGE};
+       // String permission[] = {Manifest.permission.READ_EXTERNAL_STORAGE};
 
-        if (ContextCompat.checkSelfPermission(this, permission[0]) != PackageManager.PERMISSION_GRANTED) {
-            //Check version android is >= 6.0 (Marshmallow)
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                ActivityCompat.requestPermissions(this, permission, REQUEST_IMAGE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_IMAGE);
+
             }
+        return;
         }
         readImage();
-
     }
 
     private void readImage(){
-        //get a path
-        String path = Environment.getExternalStorageDirectory().getPath() + "/Pictures";
+        //get a thpa
+        String path = Environment.getExternalStorageDirectory() + mDirector;
         File file = new File(path);
         File [] arrFile = file.listFiles();
+
         //Check if file image is null
         if(arrFile.length == 0){
             Toast.makeText(this, "File is empty", Toast.LENGTH_LONG).show();
         }else {
             for(int i = 0; i<arrFile.length; i++){
                 //Read images into Bitmap object & add to ArrayList
+                // F8
+                arrFile[i].listFiles();
                 Bitmap bitmap = BitmapFactory.decodeFile(arrFile[i].getPath());
                 mBitmapList.add(bitmap);
             }

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +29,24 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        LayoutInflater layoutInflater    = LayoutInflater.from(viewGroup.getContext());
-        View itemView = layoutInflater.inflate(R.layout.list_item_gallery,viewGroup, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        View itemView = layoutInflater.inflate(R.layout.list_item_gallery, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(itemView);
+
+
         return viewHolder;
+
+
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setData(position);
+       holder.setData(position);
+
+       //Picasso.with(mConText).load(String.valueOf(mBitmapList.get(position))).into(holder.mImageGallery);
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -44,7 +54,7 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mImageGallery;
+        ImageView mImageGallery;
 
         public ViewHolder(View itemView) {
             super(itemView);
