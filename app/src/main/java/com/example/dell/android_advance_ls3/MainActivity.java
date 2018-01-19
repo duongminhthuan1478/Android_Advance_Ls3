@@ -23,7 +23,7 @@ import java.util.List;
 import static com.example.dell.android_advance_ls3.R.id.image_gallery;
 
 public class MainActivity extends AppCompatActivity {
-    private final static int REQUEST_IMAGE = 1;
+    private final int REQUEST_IMAGE = 1;
     private RecyclerView mRecyclerView;
     private String mDirector = "/Pictures/Zalo";
     private List<Bitmap> mBitmapList = new ArrayList<>();
@@ -33,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkAndRequestPermissions();
-        initView();
+        //initView();
+        MyAsyncTask myAsyncTask= new MyAsyncTask(this);
+        myAsyncTask.execute();
+
+
 
     }
 
@@ -65,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecylerAdapter recyclerAdapter = new RecylerAdapter(this, mBitmapList);
         mRecyclerView.setAdapter(recyclerAdapter);
-}
+    }
 
 
     private void checkAndRequestPermissions() {
@@ -81,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
             }
         return;
         }
-        readImage();
+        //readImage();
     }
 
     private void readImage(){
-        //get a thpa
+        //get a path
         String path = Environment.getExternalStorageDirectory() + mDirector;
         File file = new File(path);
         File [] arrFile = file.listFiles();

@@ -1,5 +1,6 @@
 package com.example.dell.android_advance_ls3;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
@@ -29,22 +30,21 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = layoutInflater.inflate(R.layout.list_item_gallery, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(itemView);
+//        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+//        View itemView = layoutInflater.inflate(R.layout.list_item_gallery, viewGroup, false);
+//        ViewHolder viewHolder = new ViewHolder(itemView);
+        View itemView = LayoutInflater.from(viewGroup.getContext()).
+                inflate(R.layout.list_item_gallery, viewGroup, false);
+        return new ViewHolder(itemView);
 
 
-        return viewHolder;
 
 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
        holder.setData(position);
-
-       //Picasso.with(mConText).load(String.valueOf(mBitmapList.get(position))).into(holder.mImageGallery);
-
     }
 
 
@@ -64,5 +64,6 @@ public class RecylerAdapter extends RecyclerView.Adapter<RecylerAdapter.ViewHold
             mImageGallery.setImageBitmap(mBitmapList.get(position));
         }
     }
+
 }
 
